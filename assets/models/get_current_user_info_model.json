@@ -1,0 +1,24 @@
+{
+    "application": {
+      "version": "string",
+      "releaseDate": "2024-03-13T21:36:27.106Z",
+      "features": {
+        "additionalProp1": true,
+        "additionalProp2": true,
+        "additionalProp3": true
+      }
+    },
+    "user": {
+      "id": 0,
+      "name": "string",
+      "surname": "string",
+      "userName": "string",
+      "emailAddress": "string",
+      "role": "string"
+    },
+    "tenant": {
+      "id": 0,
+      "tenancyName": "string",
+      "name": "string"
+    }
+  }

@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+linter:
+  rules:
+  - always_use_package_imports
+
+
+analyzer:
+  exclude:
+    - lib/app/di/sandal_module.config
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gr.dart"
+    - "**/*.iconfig.dart"
+    - "**/*.config.dart"
+    - "**/*.inject.dart"
+    - "**/*.mocks.dart"
+    - "**/*.router.dart"
+    - ["**/*.g.dart"]
+    - .fvm/
+    - "**/app_routes.dart"
+

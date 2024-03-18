@@ -1,0 +1,1 @@
+export 'package:getx_boilerplate/presentation/second/second.screen.dart';
