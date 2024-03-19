@@ -493,7 +493,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1F9A4C8318532D180447BB2E /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate PROD";
+				APP_DISPLAY_NAME = "Boilerplate PROD";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -625,7 +625,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB31FFE77D4F9134B8FFDBB5 /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate DEV";
+				APP_DISPLAY_NAME = "Boilerplate DEV";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -723,7 +723,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 40EB69122AE8939364DBC631 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate DEV";
+				APP_DISPLAY_NAME = "Boilerplate DEV";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -816,7 +816,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 94C425827F7A172AF092F0AC /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate DEV";
+				APP_DISPLAY_NAME = "Boilerplate DEV";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -914,7 +914,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 419C089DBC14CF88FF3AB73C /* Pods-Runner.debug-qa.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate QA";
+				APP_DISPLAY_NAME = "Boilerplate QA";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -1012,7 +1012,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DA01A901D572DC10F897CE6F /* Pods-Runner.release-qa.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate QA";
+				APP_DISPLAY_NAME = "Boilerplate QA";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -1105,7 +1105,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2949F62FA6A5B0F82228BB6 /* Pods-Runner.profile-qa.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate QA";
+				APP_DISPLAY_NAME = "Boilerplate QA";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -1258,7 +1258,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E36614F9547D65B8A135522F /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate PROD";
+				APP_DISPLAY_NAME = "Boilerplate PROD";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
@@ -1283,7 +1283,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 76309A84E52883418BF86EFE /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "GetX Boilerplate PROD";
+				APP_DISPLAY_NAME = "Boilerplate PROD";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
