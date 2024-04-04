@@ -1,1 +1,0 @@
-export 'package:getx_boilerplate/infrastructure/navigation/bindings/controllers/second.controller.binding.dart'; 

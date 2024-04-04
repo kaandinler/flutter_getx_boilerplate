@@ -4,6 +4,8 @@ import 'package:getx_boilerplate/app/modules/page/home/bindings/home_binding.dar
 import 'package:getx_boilerplate/app/modules/page/home/views/home_view.dart';
 import 'package:getx_boilerplate/app/modules/page/main/bindings/main_binding.dart';
 import 'package:getx_boilerplate/app/modules/page/main/views/main_view.dart';
+import 'package:getx_boilerplate/app/modules/page/splash/bindings/splash_binding.dart';
+import 'package:getx_boilerplate/app/modules/page/splash/views/splash_view.dart';
 import 'package:getx_boilerplate/app/modules/page/third/bindings/third_binding.dart';
 import 'package:getx_boilerplate/app/modules/page/third/views/third_view.dart';
 import 'package:getx_boilerplate/app/modules/page/unknown/bindings/unknown_binding.dart';
@@ -17,8 +19,9 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
   static const UNKNOWN = Routes.UNKNOWN;
+  static const HOME = Routes.HOME;
+  static const SPLASH = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -43,6 +46,11 @@ class AppPages {
       name: _Paths.MAIN,
       page: () => const MainView(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH,
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
   ];
 }

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:getx_boilerplate/app/utils/flavor.dart';
+import 'package:getx_boilerplate/app/flavor/flavor.dart';
 import 'package:new_version_plus/new_version_plus.dart';
 
 class AppNewVersionControl {

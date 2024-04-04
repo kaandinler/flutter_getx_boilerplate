@@ -1,6 +1,6 @@
 //Created by https://github.com/kaandinler
 
-enum Flavor { dev, qa, prod }
+import 'package:getx_boilerplate/app/flavor/environment.dart';
 
 class FlavorValues {
   final String? bundleID;
@@ -10,14 +10,14 @@ class FlavorValues {
 }
 
 class FlavorConfig {
-  final Flavor flavor;
+  final Environment flavor;
   final String env;
   final String name;
   final FlavorValues? values;
   static FlavorConfig? _instance;
 
   factory FlavorConfig({
-    required Flavor flavor,
+    required Environment flavor,
     required String name,
     required String env,
     required FlavorValues values,
@@ -43,9 +43,9 @@ class FlavorConfig {
     return _instance!;
   }
 
-  static bool isProduction() => _instance!.flavor == Flavor.prod;
+  static bool isProduction() => _instance!.flavor == Environment.prod;
 
-  static bool isDevelopment() => _instance!.flavor == Flavor.dev;
+  static bool isDevelopment() => _instance!.flavor == Environment.dev;
 
-  static bool isQA() => _instance!.flavor == Flavor.qa;
+  static bool isQA() => _instance!.flavor == Environment.qa;
 }
