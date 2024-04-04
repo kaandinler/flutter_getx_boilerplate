@@ -5,6 +5,9 @@ import 'package:getx_boilerplate/app/modules/page/home/controllers/home_controll
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
+    // Get.put<HomeController>(
+    //   HomeController(),
+    // );
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );

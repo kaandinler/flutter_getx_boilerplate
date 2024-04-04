@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:getx_boilerplate/app/flavor/environment_badge.dart';
 
 import 'package:getx_boilerplate/app/modules/page/home/controllers/home_controller.dart';
-import 'package:getx_boilerplate/infrastructure/navigation/navigation.dart';
-import 'package:getx_boilerplate/presentation/second/second.screen.dart';
+import 'package:getx_boilerplate/app/modules/page/third/views/third_view.dart';
 
 //Created by https://github.com/kaandinler
 
@@ -32,11 +32,40 @@ class HomeView extends GetView<HomeController> {
               _goRoute(),
               _goSecondScreen(),
               _goMainPage(),
-              _dialogButtons()
+              _dialogButtons(),
+              _saveDataButtons(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  ButtonBar _saveDataButtons() {
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              controller.saveDataToLocalStorage();
+            },
+            child: const Text('Save Data to Local Storage')),
+        ElevatedButton(
+            onPressed: () {
+              controller.readDataFromLocalStorage();
+            },
+            child: const Text('Read Data from Local Storage')),
+        ElevatedButton(
+            onPressed: () {
+              controller.saveDataToSecureStorage();
+            },
+            child: const Text('Save Data to Secure Storage')),
+        ElevatedButton(
+            onPressed: () {
+              controller.readDataFromSecureStorage();
+            },
+            child: const Text('Read Data from Secure Storage')),
+      ],
     );
   }
 
@@ -111,9 +140,9 @@ class HomeView extends GetView<HomeController> {
   ElevatedButton _goSecondScreen() {
     return ElevatedButton(
         onPressed: () {
-          Get.to(const SecondScreen(), arguments: 'Data from First');
+          Get.to(const ThirdView(), arguments: 'Data from ThirdView');
         },
-        child: const Text('Go to Second Screen'));
+        child: const Text('Go to Third View'));
   }
 
   ButtonBar _goRoute() {
@@ -136,7 +165,7 @@ class HomeView extends GetView<HomeController> {
       children: [
         ElevatedButton(
           onPressed: () {
-            Get.changeTheme(Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
+            controller.changeThemeMode();
           },
           child: const Text('Change Theme'),
         ),

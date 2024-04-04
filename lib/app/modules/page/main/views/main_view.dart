@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:getx_boilerplate/app/modules/page/home/views/home_view.dart';
 import 'package:getx_boilerplate/app/modules/page/main/controllers/main_controller.dart';
+import 'package:getx_boilerplate/app/modules/page/third/views/third_view.dart';
 import 'package:getx_boilerplate/app/modules/page/unknown/views/unknown_view.dart';
-import 'package:getx_boilerplate/presentation/second/second.screen.dart';
 
 //Created by https://github.com/kaandinler
 
@@ -47,7 +47,7 @@ class MainView extends GetView<MainController> {
             children: const <Widget>[
               HomeView(),
               UnknownView(),
-              SecondScreen(),
+              ThirdView(),
               // Center(
               //   child: Text('Home'),
               // ),
