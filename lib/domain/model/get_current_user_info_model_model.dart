@@ -7,10 +7,10 @@ class GetCurrentUserInfoModel {
 
   GetCurrentUserInfoModel.fromJson(Map<String, dynamic> json) {
     application = json['application'] != null
-        ? Application?.fromJson(json['application'])
+        ? Application.fromJson(json['application'])
         : null;
-    user = json['user'] != null ? User?.fromJson(json['user']) : null;
-    tenant = json['tenant'] != null ? Tenant?.fromJson(json['tenant']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    tenant = json['tenant'] != null ? Tenant.fromJson(json['tenant']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -38,8 +38,7 @@ class Application {
   Application.fromJson(Map<String, dynamic> json) {
     version = json['version'];
     releaseDate = json['releaseDate'];
-    features =
-        json['features'] != null ? Features?.fromJson(json['features']) : null;
+    features = json['features'] != null ? Features.fromJson(json['features']) : null;
   }
 
   Map<String, dynamic> toJson() {

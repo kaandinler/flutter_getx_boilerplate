@@ -7,13 +7,9 @@ import 'package:getx_boilerplate/app/shared/abstract/i_local_storage_service.dar
 class LocalStorageService extends GetxService implements ILocalStorageService {
   final GetStorage _getStorage = GetStorage();
 
-  LocalStorageService() {
-    init();
-  }
-
   @override
   Future<void> init() async {
-    await _getStorage.initStorage;
+    await GetStorage.init();
   }
 
   @override

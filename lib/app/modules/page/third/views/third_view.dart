@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:getx_boilerplate/app/modules/page/home/bindings/home_binding.dart';
-import 'package:getx_boilerplate/app/modules/page/home/views/home_view.dart';
+import 'package:getx_boilerplate/app/routes/app_pages.dart';
 import 'package:getx_boilerplate/app/modules/page/third/controllers/third_controller.dart';
 
 class ThirdView extends GetView<ThirdController> {
@@ -21,7 +20,7 @@ class ThirdView extends GetView<ThirdController> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Get.to(() => const HomeView(), binding: HomeBinding());
+                Get.toNamed(Routes.HOME);
               },
               child: const Text(
                 'Go to Home Page',

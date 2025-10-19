@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_boilerplate/app/flavor/environment_badge.dart';
+import 'package:getx_boilerplate/app/routes/app_pages.dart';
 
 import 'package:getx_boilerplate/app/modules/page/home/controllers/home_controller.dart';
-import 'package:getx_boilerplate/app/modules/page/third/views/third_view.dart';
 
 //Created by https://github.com/kaandinler
 
@@ -12,30 +11,28 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    return EnvironmentsBadge(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('HomeView AppBar'),
-          centerTitle: true,
-        ),
-        body: controller.obx(
-          onLoading: const Center(child: CircularProgressIndicator()),
-          onEmpty: const Center(child: Text('Not data found')),
-          onError: (error) => Center(child: Text('Error: $error')),
-          (state) => Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _helloWorldLocale(),
-              _helloNameLocale(),
-              _changeLocale(),
-              _changeTheme(),
-              _goRoute(),
-              _goSecondScreen(),
-              _goMainPage(),
-              _dialogButtons(),
-              _saveDataButtons(),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('HomeView AppBar'),
+        centerTitle: true,
+      ),
+      body: controller.obx(
+        onLoading: const Center(child: CircularProgressIndicator()),
+        onEmpty: const Center(child: Text('No data found')),
+        onError: (error) => Center(child: Text('Error: $error')),
+        (state) => Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _helloWorldLocale(),
+            _helloNameLocale(),
+            _changeLocale(),
+            _changeTheme(),
+            _goRoute(),
+            _goSecondScreen(),
+            _goMainPage(),
+            _dialogButtons(),
+            _saveDataButtons(),
+          ],
         ),
       ),
     );
@@ -108,7 +105,7 @@ class HomeView extends GetView<HomeController> {
   ElevatedButton _goMainPage() {
     return ElevatedButton(
       onPressed: () {
-        Get.toNamed('/main');
+        Get.toNamed(Routes.MAIN);
       },
       child: const Text('Go to Main Page'),
     );
@@ -140,7 +137,7 @@ class HomeView extends GetView<HomeController> {
   ElevatedButton _goSecondScreen() {
     return ElevatedButton(
         onPressed: () {
-          Get.to(const ThirdView(), arguments: 'Data from ThirdView');
+          Get.toNamed(Routes.THIRD, arguments: 'Data from ThirdView');
         },
         child: const Text('Go to Third View'));
   }
@@ -151,7 +148,7 @@ class HomeView extends GetView<HomeController> {
       children: [
         ElevatedButton(
           onPressed: () {
-            Get.toNamed('/unknown');
+            Get.toNamed(Routes.UNKNOWN);
           },
           child: const Text('Unknown Page'),
         ),
@@ -219,3 +216,4 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
+

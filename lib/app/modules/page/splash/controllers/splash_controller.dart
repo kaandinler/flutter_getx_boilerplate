@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:getx_boilerplate/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
   //TODO: Implement SplashController
@@ -13,7 +14,7 @@ class SplashController extends GetxController {
   void onReady() async {
     super.onReady();
     await Future.delayed(const Duration(seconds: 2), () {
-      Get.offNamed('/home');
+      Get.offAllNamed(Routes.HOME);
     });
   }
 
