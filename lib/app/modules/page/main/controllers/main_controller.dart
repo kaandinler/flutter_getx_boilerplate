@@ -11,13 +11,14 @@ class MainController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Get.log('ThirdController onInit');
-    AppNewVersionControl.checkAppVersion();
+    Get.log('MainController onInit');
   }
 
   @override
   void onReady() {
     super.onReady();
+    // Check version when context is ready
+    AppNewVersionControl.checkAppVersion();
   }
 
   @override

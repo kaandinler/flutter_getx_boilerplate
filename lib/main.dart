@@ -1,6 +1,7 @@
 //Created by https://github.com/kaandinler
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_boilerplate/app/core/translations/messages.dart';
@@ -8,7 +9,12 @@ import 'package:getx_boilerplate/app/flavor/environment_badge.dart';
 import 'package:getx_boilerplate/app/routes/app_pages.dart';
 
 void localLogWriter(String text, {bool isError = false}) {
-  // INFO pass the message to your favourite logging package here please note that even if enableLog: false log messages will be pushed in this callback you get check the flag if you want through GetConfig.isLogEnable
+  // INFO: Centralized GetX log hook
+  if (isError) {
+    debugPrint('E/GetX: $text');
+  } else {
+    debugPrint('I/GetX: $text');
+  }
 }
 
 void mainCommon() async {
@@ -35,8 +41,8 @@ void mainCommon() async {
       transitionDuration: Get.defaultTransitionDuration, //300
       // transitionDuration: const Duration(milliseconds: 500),
       defaultTransition: Transition.circularReveal,
-      enableLog: true,
-      // logWriterCallback: localLogWriter,
+      enableLog: !kReleaseMode,
+      logWriterCallback: localLogWriter,
     ),
   );
 }
