@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_boilerplate/app/routes/app_pages.dart';
 import 'package:getx_boilerplate/app/shared/widgets/app_error_view.dart';
+import 'package:getx_boilerplate/app/shared/abstract/i_bottom_sheet_service.dart';
 
 import 'package:getx_boilerplate/app/modules/page/home/controllers/home_controller.dart';
 
@@ -78,6 +79,7 @@ class HomeView extends GetView<HomeController> {
         _showSnackBar(),
         _showDefaultDialog(context),
         _showBottomSheet(),
+        _showConfirmBottomSheet(),
       ],
     );
   }
@@ -85,26 +87,42 @@ class HomeView extends GetView<HomeController> {
   ElevatedButton _showBottomSheet() {
     return ElevatedButton(
         onPressed: () {
-          Get.bottomSheet(
-            Container(
-              width: Get.width,
-              decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )),
-              child: const Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('BottomSheet'),
-                ],
-              ),
+          final sheet = Get.find<IBottomSheetService>();
+          sheet.show(
+            child: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Reusable BottomSheet'),
+                SizedBox(height: 12),
+                Text('Bu icerik her yerde kolayca kullanilabilir.'),
+              ],
             ),
           );
         },
         child: const Text('Show BottomSheet'));
+  }
+
+  ElevatedButton _showConfirmBottomSheet() {
+    return ElevatedButton(
+      onPressed: () async {
+        final sheet = Get.find<IBottomSheetService>();
+        final result = await sheet.showConfirm(
+          title: 'Islemi onayla',
+          message: 'Devam etmek istiyor musun?',
+          confirmText: 'Evet',
+          cancelText: 'Hayir',
+        );
+        if (result != null) {
+          Get.showSnackbar(
+            GetSnackBar(
+              message: 'Sonuc: ${result ? 'Evet' : 'Hayir'}',
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      },
+      child: const Text('Show Confirm BottomSheet'),
+    );
   }
 
   ElevatedButton _goMainPage() {
