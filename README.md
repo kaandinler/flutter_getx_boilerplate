@@ -40,3 +40,37 @@ flutter pub run flutter_native_splash:create
 ## Release test
 
 flutter run --release --verbose --flavor dev -t lib/main_dev.dart
+
+## Environment (.env) with flavors
+
+- Env files live under `assets/env/` and are bundled with the app:
+  - `assets/env/.env` (fallback/default)
+  - `assets/env/.env.dev`
+  - `assets/env/.env.qa`
+  - `assets/env/.env.prod`
+- Keys:
+  - `BASE_URL` string
+  - `LOG_LEVEL` one of: `debug|info|warn|error`
+  - Feature flags use `FEATURE_` prefix, e.g. `FEATURE_NEW_DASHBOARD=true`
+
+How it works
+- Each flavor entrypoint loads its env before DI:
+  - `lib/main_dev.dart` → `.env.dev`
+  - `lib/main_qa.dart` → `.env.qa`
+  - `lib/main_prod.dart` → `.env.prod`
+- Values are provided app-wide via `AppConfig` (GetX):
+
+Usage example
+```dart
+import 'package:get/get.dart';
+import 'package:getx_boilerplate/app/config/app_config.dart';
+
+final config = Get.find<AppConfig>();
+final apiBase = config.baseUrl; // e.g., https://dev-api.example.com
+final isNewDashboardOn = config.isFeatureEnabled('NEW_DASHBOARD');
+```
+
+Run commands
+- Dev: `flutter run --flavor dev -t lib/main_dev.dart`
+- QA: `flutter run --flavor qa -t lib/main_qa.dart`
+- Prod: `flutter run --flavor prod -t lib/main_prod.dart`

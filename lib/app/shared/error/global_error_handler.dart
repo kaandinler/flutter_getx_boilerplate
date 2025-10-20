@@ -37,6 +37,11 @@ class GlobalErrorHandler {
   }
 
   void _showSnack(String message) {
+    // Avoid showing before overlay is ready (e.g., before runApp)
+    if (Get.overlayContext == null) {
+      Get.log('Snack skipped (overlay not ready): $message');
+      return;
+    }
     if (Get.isSnackbarOpen == true) return;
     Get.showSnackbar(
       GetSnackBar(

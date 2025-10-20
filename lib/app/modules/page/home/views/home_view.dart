@@ -35,7 +35,7 @@ class HomeView extends GetView<HomeController> {
             _goRoute(),
             _goSecondScreen(),
             _goMainPage(),
-            _dialogButtons(),
+            _dialogButtons(context),
             _saveDataButtons(),
           ],
         ),
@@ -71,12 +71,12 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  ButtonBar _dialogButtons() {
+  ButtonBar _dialogButtons(BuildContext context) {
     return ButtonBar(
       alignment: MainAxisAlignment.center,
       children: [
         _showSnackBar(),
-        _showDefaultDialog(),
+        _showDefaultDialog(context),
         _showBottomSheet(),
       ],
     );
@@ -116,27 +116,50 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  ElevatedButton _showDefaultDialog() {
+  ElevatedButton _showDefaultDialog(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          Get.defaultDialog(
-            title: 'Dialog Title',
-            middleText: 'This is middle text',
-            textConfirm: 'Confirm',
-            textCancel: 'Cancel',
-            onConfirm: () {},
-            onCancel: () {},
-          );
-        },
-        child: const Text('Show Dialog'));
+      onPressed: () {
+        showDialog<void>(
+          context: context,
+          barrierDismissible: true,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Dialog Title'),
+            content: const Text('This is middle text'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx, rootNavigator: true).pop(),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.of(ctx, rootNavigator: true).pop(),
+                child: const Text('Confirm'),
+              ),
+            ],
+          ),
+        );
+      },
+      child: const Text('Show Dialog'),
+    );
   }
 
   ElevatedButton _showSnackBar() {
     return ElevatedButton(
-        onPressed: () {
-          Get.snackbar('Title', 'Message');
-        },
-        child: const Text('Show SnackBar'));
+      onPressed: () {
+        if (Get.overlayContext == null) {
+          Get.log('Snackbar skipped (overlay not ready)');
+          return;
+        }
+        Get.showSnackbar(
+          const GetSnackBar(
+            title: 'Title',
+            message: 'Message',
+            duration: Duration(seconds: 3),
+            snackPosition: SnackPosition.TOP,
+          ),
+        );
+      },
+      child: const Text('Show SnackBar'),
+    );
   }
 
   ElevatedButton _goSecondScreen() {
@@ -147,8 +170,8 @@ class HomeView extends GetView<HomeController> {
         child: const Text('Go to Third View'));
   }
 
-  ButtonBar _goRoute() {
-    return ButtonBar(
+  OverflowBar _goRoute() {
+    return OverflowBar(
       alignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
@@ -161,8 +184,8 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  ButtonBar _changeTheme() {
-    return ButtonBar(
+  OverflowBar _changeTheme() {
+    return OverflowBar(
       alignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
@@ -175,8 +198,8 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  ButtonBar _changeLocale() {
-    return ButtonBar(
+  OverflowBar _changeLocale() {
+    return OverflowBar(
       alignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
@@ -221,4 +244,3 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
-

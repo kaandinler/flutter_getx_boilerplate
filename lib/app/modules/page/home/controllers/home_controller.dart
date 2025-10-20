@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_boilerplate/app/shared/abstract/i_local_storage_service.dart';
 import 'package:getx_boilerplate/app/shared/abstract/i_secure_storage_service.dart';
+import 'package:getx_boilerplate/app/theme/theme_service.dart';
 
 class HomeController extends GetxController with StateMixin {
   final ILocalStorageService localStorage = Get.find<ILocalStorageService>();
   final ISecureStorageService secureStorage = Get.find<ISecureStorageService>();
+  final ThemeService themeService = Get.find<ThemeService>();
 
   @override
   Future<void> onReady() async {
@@ -42,9 +43,6 @@ class HomeController extends GetxController with StateMixin {
   }
 
   void changeThemeMode() {
-    final isDarkTheme = !localStorage.isDarkTheme;
-    localStorage.isDarkTheme = isDarkTheme;
-    Get.changeThemeMode(isDarkTheme ? ThemeMode.dark : ThemeMode.light);
+    themeService.toggleDarkLight();
   }
 }
-

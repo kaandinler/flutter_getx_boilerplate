@@ -14,6 +14,7 @@ dependencies:
   new_version_plus: ^0.1.1
   flutter_secure_storage: ^9.0.0
   get_storage: ^2.1.1
+  flutter_dotenv: ^6.0.0
 
 
 dev_dependencies:
@@ -24,4 +25,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/env/.env
+    - assets/env/.env.dev
+    - assets/env/.env.qa
+    - assets/env/.env.prod
 
