@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_boilerplate/app/routes/app_pages.dart';
+import 'package:getx_boilerplate/app/shared/widgets/app_error_view.dart';
 
 import 'package:getx_boilerplate/app/modules/page/home/controllers/home_controller.dart';
 
@@ -19,7 +20,11 @@ class HomeView extends GetView<HomeController> {
       body: controller.obx(
         onLoading: const Center(child: CircularProgressIndicator()),
         onEmpty: const Center(child: Text('No data found')),
-        onError: (error) => Center(child: Text('Error: $error')),
+        onError: (error) => AppErrorView(
+          title: 'Bir şeyler ters gitti',
+          message: error ?? 'Beklenmeyen bir hata oluştu.',
+          onRetry: () => controller.refresh(),
+        ),
         (state) => Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
