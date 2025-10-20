@@ -8,12 +8,19 @@ import 'package:getx_boilerplate/app/shared/abstract/i_bottom_sheet_service.dart
 import 'package:getx_boilerplate/app/shared/concrete/bottom_sheet_service.dart';
 import 'package:getx_boilerplate/app/shared/error/global_error_handler.dart';
 import 'package:getx_boilerplate/app/theme/theme_service.dart';
+import 'package:getx_boilerplate/app/security/security_service.dart';
 
 class BoilerplateDependencyInjection {
   static Future<void> init() async {
     // App configuration loaded from .env (via flutter_dotenv)
     Get.put<AppConfig>(
       AppConfig.fromDotEnv(),
+      permanent: true,
+    );
+
+    // Network security hardening (optional; reads flags from AppConfig)
+    await Get.putAsync<SecurityService>(
+      () async => SecurityService().init(),
       permanent: true,
     );
 

@@ -43,7 +43,13 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-</dict>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<!-- Explicit ATS policy: disallow arbitrary loads. Add domain exceptions only if necessary. -->
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<false/>
+		</dict>
+	</dict>
 </plist>

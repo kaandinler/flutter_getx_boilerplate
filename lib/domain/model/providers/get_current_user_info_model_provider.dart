@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-
+import 'package:getx_boilerplate/app/config/app_config.dart';
+import 'package:getx_boilerplate/app/shared/abstract/i_secure_storage_service.dart';
 import 'package:getx_boilerplate/domain/model/get_current_user_info_model_model.dart';
 
 class GetCurrentUserInfoModelProvider extends GetConnect {
@@ -15,7 +16,25 @@ class GetCurrentUserInfoModelProvider extends GetConnect {
             .toList();
       }
     };
-    httpClient.baseUrl = 'YOUR-API-URL';
+
+    // Base URL from AppConfig
+    final config = Get.find<AppConfig>();
+    httpClient.baseUrl = config.baseUrl;
+
+    // Enforce HTTPS and attach Authorization token if available
+    httpClient.addRequestModifier<void>((request) async {
+      final uri = Uri.parse(request.url);
+      if (config.forceHttps && uri.scheme.toLowerCase() != 'https') {
+        throw Exception('Insecure scheme blocked: \'${uri.scheme}\' for \'${request.url}\'');
+      }
+      if (!Get.isRegistered<ISecureStorageService>()) return request;
+      final storage = Get.find<ISecureStorageService>();
+      final token = await storage.read(key: 'auth_token');
+      if (token != null && token.isNotEmpty) {
+        request.headers['Authorization'] = 'Bearer $token';
+      }
+      return request;
+    });
   }
 
   Future<GetCurrentUserInfoModel?> getGetCurrentUserInfoModel(int id) async {

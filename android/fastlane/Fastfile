@@ -1,0 +1,31 @@
+default_platform(:android)
+
+platform :android do
+  desc "Upload prod AAB to Google Play (internal)"
+  lane :internal do |options|
+    track = options[:track] || 'internal'
+    aab_path = options[:aab] || 'build/app/outputs/bundle/prodRelease/app-prod-release.aab'
+
+    # Optional staged rollout when targeting production
+    rollout_fraction_env = ENV['ANDROID_ROLLOUT_FRACTION']
+    rollout_fraction = rollout_fraction_env && rollout_fraction_env.strip.length > 0 ? rollout_fraction_env.to_f : 0.0
+
+    params = {
+      aab: aab_path,
+      track: track,
+      json_key: ENV['PLAY_SERVICE_ACCOUNT_JSON_PATH'],
+      package_name: 'com.qandq.getx_boilerplate'
+    }
+    if track == 'production' && rollout_fraction > 0.0 && rollout_fraction < 1.0
+      UI.message("Using staged rollout fraction: #{rollout_fraction}")
+      params[:rollout] = rollout_fraction
+    end
+
+    supply(params)
+  end
+
+  desc "Upload prod AAB to Google Play (production)"
+  lane :release do
+    internal(track: 'production')
+  end
+end

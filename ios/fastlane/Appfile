@@ -1,0 +1,5 @@
+app_identifier("com.qandq.getx_boilerplate")
+apple_id(ENV['APP_STORE_CONNECT_APPLE_ID'] || "your-apple-id@example.com")
+itc_team_id(ENV['APP_STORE_CONNECT_ITC_TEAM_ID'] || "")
+team_id(ENV['APP_STORE_CONNECT_TEAM_ID'] || "")
+

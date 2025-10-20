@@ -1,5 +1,5 @@
 name: getx_boilerplate
-version: 1.0.0+1
+version: 1.0.1+2
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -30,4 +30,43 @@ flutter:
     - assets/env/.env.dev
     - assets/env/.env.qa
     - assets/env/.env.prod
+    - assets/certs/
+
+# Launcher icons configuration
+# Requires: flutter_launcher_icons (already in dev_dependencies)
+# Put your 1024x1024 PNG at assets/icons/app_icon.png before running:
+#   flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icons/app_icon.png
+  min_sdk_android: 21
+
+# Native splash configuration
+# Requires: flutter_native_splash (already in dependencies)
+# To generate splash assets, run:
+#   flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+  fullscreen: true
+
+  # Light theme background
+  color: "#FFFFFF"
+  # Optional center image (uncomment and provide asset to show an icon)
+  # image: assets/splash/splash_icon.png
+
+  # Dark theme background
+  color_dark: "#121212"
+  # Optional dark image
+  # image_dark: assets/splash/splash_icon_dark.png
+
+  android_12:
+    # Android 12+ requires explicit colors; images are optional
+    color: "#FFFFFF"
+    color_dark: "#121212"
+    # Optional Android 12 specific assets
+    # image: assets/splash/android12_splash_icon.png
+    # image_dark: assets/splash/android12_splash_icon_dark.png
 

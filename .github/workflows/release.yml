@@ -1,0 +1,169 @@
+name: Build & Publish
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [ closed ]
+
+env:
+  FLUTTER_VERSION: "3.35.6" # from .fvmrc
+  # Android publishing controls
+  PUBLISH_TRACK: internal # internal|production
+  ANDROID_ROLLOUT_FRACTION: "" # e.g., 0.1 for 10% staged rollout
+  # iOS publishing controls
+  IOS_SUBMIT_FOR_REVIEW: "false" # true to submit for App Store review
+  IOS_AUTOMATIC_RELEASE: "false" # true to auto release after approval
+
+jobs:
+  android:
+    if: ${{ github.event.pull_request.merged == true }}
+    name: Android AAB/APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (merge commit)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+
+      - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Setup Android signing (from secrets)
+        shell: bash
+        run: |
+          if [[ -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" ]]; then
+            echo "Preparing Android keystore and key.properties"
+            echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/release.keystore
+            cat > android/key.properties <<EOF
+storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+storeFile=app/release.keystore
+EOF
+          else
+            echo "ANDROID_KEYSTORE_BASE64 is empty; building with debug signing."
+          fi
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      # Optional: generate splash if configured only with colors; icons are skipped unless asset exists
+      - name: Generate native splash (optional)
+        run: flutter pub run flutter_native_splash:create
+
+      - name: Build AAB (release)
+        run: flutter build appbundle -t lib/main_prod.dart --flavor prod --release
+
+      - name: Build APK (release)
+        run: flutter build apk -t lib/main_prod.dart --flavor prod --release
+
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-artifacts
+          path: |
+            build/app/outputs/bundle/prodRelease/*.aab
+            build/app/outputs/bundle/release/*.aab
+            build/app/outputs/flutter-apk/*release*.apk
+
+      - name: Install Fastlane
+        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        run: sudo gem install fastlane --no-document
+
+      - name: Prepare Google Play credentials
+        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        run: |
+          mkdir -p android/fastlane
+          echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" > android/fastlane/service_account.json
+          echo "PLAY_SERVICE_ACCOUNT_JSON_PATH=$GITHUB_WORKSPACE/android/fastlane/service_account.json" >> $GITHUB_ENV
+
+      - name: Publish to Google Play (env track)
+        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        working-directory: android
+        run: |
+          set -e
+          AAB_PATH=$(ls -1 ../build/app/outputs/bundle/prodRelease/*.aab 2>/dev/null || true)
+          if [ -z "$AAB_PATH" ]; then
+            AAB_PATH=$(ls -1 ../build/app/outputs/bundle/release/*.aab 2>/dev/null || true)
+          fi
+          if [ -z "$AAB_PATH" ]; then
+            echo "AAB not found" && exit 1
+          fi
+          echo "Found AAB: $AAB_PATH"
+          if [ "${{ env.PUBLISH_TRACK }}" = "internal" ]; then
+            fastlane android internal aab:"$AAB_PATH"
+          else
+            fastlane android release aab:"$AAB_PATH"
+          fi
+
+  ios:
+    if: ${{ github.event.pull_request.merged == true }}
+    name: iOS IPA (publish)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout (merge commit)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+
+      - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Import signing certificate (optional)
+        if: ${{ secrets.IOS_CERT_P12_BASE64 != '' }}
+        uses: apple-actions/import-codesign-certs@v2
+        with:
+          p12-file-base64: ${{ secrets.IOS_CERT_P12_BASE64 }}
+          p12-password: ${{ secrets.IOS_CERT_PASSWORD }}
+
+      - name: Install provisioning profile (optional)
+        if: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 != '' }}
+        uses: apple-actions/import-provisioning-profile@v1
+        with:
+          profile-base64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+
+      - name: Build iOS IPA (codesigned if secrets present)
+        run: |
+          if [ -n "${{ secrets.IOS_CERT_P12_BASE64 }}" ]; then
+            flutter build ipa -t lib/main_prod.dart --flavor prod --release
+          else
+            flutter build ipa -t lib/main_prod.dart --flavor prod --release --no-codesign
+          fi
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-artifact
+          path: build/ios/ipa/*.ipa
+
+      - name: Install Fastlane
+        if: ${{ secrets.APP_STORE_CONNECT_API_KEY != '' && secrets.APP_STORE_CONNECT_API_KEY_ID != '' && secrets.APP_STORE_CONNECT_ISSUER_ID != '' }}
+        run: sudo gem install fastlane --no-document
+
+      - name: Publish to App Store (submit for review)
+        if: ${{ env.IOS_SUBMIT_FOR_REVIEW == 'true' && secrets.APP_STORE_CONNECT_API_KEY != '' && secrets.APP_STORE_CONNECT_API_KEY_ID != '' && secrets.APP_STORE_CONNECT_ISSUER_ID != '' }}
+        env:
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          IOS_SUBMIT_FOR_REVIEW: ${{ env.IOS_SUBMIT_FOR_REVIEW }}
+          IOS_AUTOMATIC_RELEASE: ${{ env.IOS_AUTOMATIC_RELEASE }}
+        working-directory: ios
+        run: fastlane ios appstore_submit ipa:"../build/ios/ipa/*.ipa"
+
+      - name: Publish to TestFlight (if not submitting for review)
+        if: ${{ env.IOS_SUBMIT_FOR_REVIEW != 'true' && secrets.APP_STORE_CONNECT_API_KEY != '' && secrets.APP_STORE_CONNECT_API_KEY_ID != '' && secrets.APP_STORE_CONNECT_ISSUER_ID != '' }}
+        env:
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          TESTFLIGHT_GROUPS: ${{ secrets.TESTFLIGHT_GROUPS }}
+        working-directory: ios
+        run: fastlane ios beta_ipa ipa:"../build/ios/ipa/*.ipa"
