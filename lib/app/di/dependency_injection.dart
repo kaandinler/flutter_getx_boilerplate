@@ -9,6 +9,9 @@ import 'package:getx_boilerplate/app/shared/concrete/bottom_sheet_service.dart';
 import 'package:getx_boilerplate/app/shared/error/global_error_handler.dart';
 import 'package:getx_boilerplate/app/theme/theme_service.dart';
 import 'package:getx_boilerplate/app/security/security_service.dart';
+import 'package:getx_boilerplate/app/network/connectivity_service.dart';
+import 'package:getx_boilerplate/app/network/auth_service.dart';
+import 'package:getx_boilerplate/app/network/api_client.dart';
 
 class BoilerplateDependencyInjection {
   static Future<void> init() async {
@@ -24,6 +27,12 @@ class BoilerplateDependencyInjection {
       permanent: true,
     );
 
+    // Connectivity service
+    await Get.putAsync<ConnectivityService>(
+      () async => ConnectivityService().init(),
+      permanent: true,
+    );
+
     // Core services
     await Get.putAsync<ILocalStorageService>(
       () async {
@@ -36,6 +45,18 @@ class BoilerplateDependencyInjection {
 
     Get.put<ISecureStorageService>(
       SecureStorageService(),
+      permanent: true,
+    );
+
+    // Auth + API client
+    final secureStorage = Get.find<ISecureStorageService>();
+    final authService = AuthService(secureStorage);
+    Get.put<AuthService>(authService, permanent: true);
+    await Get.putAsync<AppApiClient>(
+      () async => AppApiClient(
+        authService: Get.find<AuthService>(),
+        connectivity: Get.find<ConnectivityService>(),
+      ).init(),
       permanent: true,
     );
 

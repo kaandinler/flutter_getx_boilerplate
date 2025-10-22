@@ -1,0 +1,4 @@
+// Prod flavor settings
+APP_DISPLAY_NAME = GetX Boilerplate
+PRODUCT_BUNDLE_IDENTIFIER = com.qandq.getx_boilerplate
+

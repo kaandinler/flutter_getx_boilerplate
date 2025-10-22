@@ -10,7 +10,7 @@ void main() async {
     name: "Development",
     env: Environment.dev.name,
     values: FlavorValues(
-      bundleID: "com.example.getx_boilerplate",
+      bundleID: "com.qandq.getx_boilerplate.dev",
       appName: "GetX Boilerplate",
     ),
   );

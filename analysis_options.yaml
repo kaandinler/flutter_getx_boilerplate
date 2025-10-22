@@ -15,7 +15,7 @@ analyzer:
     - "**/*.inject.dart"
     - "**/*.mocks.dart"
     - "**/*.router.dart"
-    - ["**/*.g.dart"]
+    # Duplicated pattern removed
     - .fvm/
     - "**/app_routes.dart"
 

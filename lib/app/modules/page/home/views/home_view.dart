@@ -15,12 +15,12 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView AppBar'),
+        title: Text('home.title'.tr),
         centerTitle: true,
       ),
       body: controller.obx(
         onLoading: const Center(child: CircularProgressIndicator()),
-        onEmpty: const Center(child: Text('No data found')),
+        onEmpty: Center(child: Text('common.no_data'.tr)),
         onError: (error) => AppErrorView(
           title: 'Bir şeyler ters gitti',
           message: error ?? 'Beklenmeyen bir hata oluştu.',
@@ -52,22 +52,22 @@ class HomeView extends GetView<HomeController> {
             onPressed: () {
               controller.saveDataToLocalStorage();
             },
-            child: const Text('Save Data to Local Storage')),
+            child: Text('buttons.save_local'.tr)),
         ElevatedButton(
             onPressed: () {
               controller.readDataFromLocalStorage();
             },
-            child: const Text('Read Data from Local Storage')),
+            child: Text('buttons.read_local'.tr)),
         ElevatedButton(
             onPressed: () {
               controller.saveDataToSecureStorage();
             },
-            child: const Text('Save Data to Secure Storage')),
+            child: Text('buttons.save_secure'.tr)),
         ElevatedButton(
             onPressed: () {
               controller.readDataFromSecureStorage();
             },
-            child: const Text('Read Data from Secure Storage')),
+            child: Text('buttons.read_secure'.tr)),
       ],
     );
   }
@@ -89,17 +89,17 @@ class HomeView extends GetView<HomeController> {
         onPressed: () {
           final sheet = Get.find<IBottomSheetService>();
           sheet.show(
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Reusable BottomSheet'),
+                Text('bottomsheet.reusable_title'.tr),
                 SizedBox(height: 12),
-                Text('Bu icerik her yerde kolayca kullanilabilir.'),
+                Text('bottomsheet.reusable_message'.tr),
               ],
             ),
           );
         },
-        child: const Text('Show BottomSheet'));
+        child: Text('buttons.show_bottom_sheet'.tr));
   }
 
   ElevatedButton _showConfirmBottomSheet() {
@@ -107,21 +107,21 @@ class HomeView extends GetView<HomeController> {
       onPressed: () async {
         final sheet = Get.find<IBottomSheetService>();
         final result = await sheet.showConfirm(
-          title: 'Islemi onayla',
-          message: 'Devam etmek istiyor musun?',
-          confirmText: 'Evet',
-          cancelText: 'Hayir',
+          title: 'confirm.title'.tr,
+          message: 'confirm.message'.tr,
+          confirmText: 'common.yes'.tr,
+          cancelText: 'common.no'.tr,
         );
         if (result != null) {
           Get.showSnackbar(
             GetSnackBar(
-              message: 'Sonuc: ${result ? 'Evet' : 'Hayir'}',
+              message: 'confirm.result'.trParams({'result': result ? 'common.yes'.tr : 'common.no'.tr}),
               duration: const Duration(seconds: 2),
             ),
           );
         }
       },
-      child: const Text('Show Confirm BottomSheet'),
+      child: Text('buttons.show_confirm_bottom_sheet'.tr),
     );
   }
 
@@ -130,7 +130,7 @@ class HomeView extends GetView<HomeController> {
       onPressed: () {
         Get.toNamed(Routes.MAIN);
       },
-      child: const Text('Go to Main Page'),
+      child: Text('buttons.go_main'.tr),
     );
   }
 
@@ -141,22 +141,22 @@ class HomeView extends GetView<HomeController> {
           context: context,
           barrierDismissible: true,
           builder: (ctx) => AlertDialog(
-            title: const Text('Dialog Title'),
-            content: const Text('This is middle text'),
+            title: Text('dialogs.title'.tr),
+            content: Text('dialogs.message'.tr),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx, rootNavigator: true).pop(),
-                child: const Text('Cancel'),
+                child: Text('common.cancel'.tr),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(ctx, rootNavigator: true).pop(),
-                child: const Text('Confirm'),
+                child: Text('common.confirm'.tr),
               ),
             ],
           ),
         );
       },
-      child: const Text('Show Dialog'),
+      child: Text('buttons.show_dialog'.tr),
     );
   }
 
@@ -168,15 +168,15 @@ class HomeView extends GetView<HomeController> {
           return;
         }
         Get.showSnackbar(
-          const GetSnackBar(
-            title: 'Title',
-            message: 'Message',
+          GetSnackBar(
+            title: 'dialogs.title'.tr,
+            message: 'dialogs.message'.tr,
             duration: Duration(seconds: 3),
             snackPosition: SnackPosition.TOP,
           ),
         );
       },
-      child: const Text('Show SnackBar'),
+      child: Text('buttons.show_snackbar'.tr),
     );
   }
 
@@ -185,7 +185,7 @@ class HomeView extends GetView<HomeController> {
         onPressed: () {
           Get.toNamed(Routes.THIRD, arguments: 'Data from ThirdView');
         },
-        child: const Text('Go to Third View'));
+        child: Text('buttons.go_third'.tr));
   }
 
   OverflowBar _goRoute() {
@@ -196,7 +196,7 @@ class HomeView extends GetView<HomeController> {
           onPressed: () {
             Get.toNamed(Routes.UNKNOWN);
           },
-          child: const Text('Unknown Page'),
+          child: Text('buttons.unknown_page'.tr),
         ),
       ],
     );
@@ -210,7 +210,7 @@ class HomeView extends GetView<HomeController> {
           onPressed: () {
             controller.changeThemeMode();
           },
-          child: const Text('Change Theme'),
+          child: Text('buttons.change_theme'.tr),
         ),
       ],
     );

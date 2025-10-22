@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_boilerplate/app/core/translations/messages.dart';
+import 'package:getx_boilerplate/app/core/localization/localization.dart';
 import 'package:getx_boilerplate/app/flavor/environment_badge.dart';
 import 'package:getx_boilerplate/app/theme/app_theme.dart';
 import 'package:getx_boilerplate/app/theme/theme_service.dart';
@@ -16,6 +16,7 @@ import 'package:getx_boilerplate/app/shared/error/global_error_handler.dart';
 import 'package:getx_boilerplate/app/shared/widgets/app_error_view.dart';
 import 'package:getx_boilerplate/app/di/dependency_injection.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void localLogWriter(String text, {bool isError = false}) {
   // INFO: Centralized GetX log hook
@@ -46,6 +47,9 @@ Future<void> bootstrapApp({String? envFile}) async {
 
       await BoilerplateDependencyInjection.init();
 
+      // Load JSON-based translations from assets
+      final translations = await AppTranslations.loadFromAssets();
+
       final errorHandler = Get.isRegistered<GlobalErrorHandler>()
           ? Get.find<GlobalErrorHandler>()
           : GlobalErrorHandler();
@@ -74,7 +78,14 @@ Future<void> bootstrapApp({String? envFile}) async {
             darkTheme: AppTheme.dark(),
             themeMode: themeService.themeMode.value,
             locale: Get.deviceLocale,
-            translations: Messages(),
+            fallbackLocale: kFallbackLocale,
+            supportedLocales: kSupportedLocales,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            translations: translations,
             routingCallback: (routing) {
               // Optional routing hook
             },
@@ -99,6 +110,8 @@ Future<void> bootstrapApp({String? envFile}) async {
 }
 
 void mainCommon() async {
+  // Load JSON-based translations from assets (for non-flavor entrypoints)
+  final translations = await AppTranslations.loadFromAssets();
   // Acquire global error handler (from DI if available)
   final errorHandler = Get.isRegistered<GlobalErrorHandler>()
       ? Get.find<GlobalErrorHandler>()
@@ -142,7 +155,14 @@ void mainCommon() async {
             darkTheme: AppTheme.dark(),
             themeMode: themeService.themeMode.value,
             locale: Get.deviceLocale,
-            translations: Messages(),
+            fallbackLocale: kFallbackLocale,
+            supportedLocales: kSupportedLocales,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            translations: translations,
             routingCallback: (routing) {
               //INFO This is a callback that is called whenever the routing is changed.
               //INFO We can show ads, navigate to a new page, etc.

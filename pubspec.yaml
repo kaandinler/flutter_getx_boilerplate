@@ -11,10 +11,17 @@ dependencies:
   flutter_native_splash: ^2.3.10
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
   new_version_plus: ^0.1.1
   flutter_secure_storage: ^9.0.0
   get_storage: ^2.1.1
   flutter_dotenv: ^6.0.0
+  dio: ^5.4.0
+  dio_smart_retry: ^6.0.0
+  dio_cache_interceptor: ^3.5.0
+  connectivity_plus: ^6.0.3
 
 
 dev_dependencies:
@@ -31,6 +38,7 @@ flutter:
     - assets/env/.env.qa
     - assets/env/.env.prod
     - assets/certs/
+    - assets/locales/
 
 # Launcher icons configuration
 # Requires: flutter_launcher_icons (already in dev_dependencies)
@@ -41,6 +49,19 @@ flutter_launcher_icons:
   ios: true
   image_path: assets/icons/app_icon.png
   min_sdk_android: 21
+  flavors:
+    dev:
+      android: true
+      ios: true
+      image_path: assets/icons/app_icon_dev.png
+    qa:
+      android: true
+      ios: true
+      image_path: assets/icons/app_icon_qa.png
+    prod:
+      android: true
+      ios: true
+      image_path: assets/icons/app_icon_prod.png
 
 # Native splash configuration
 # Requires: flutter_native_splash (already in dependencies)
@@ -69,4 +90,3 @@ flutter_native_splash:
     # Optional Android 12 specific assets
     # image: assets/splash/android12_splash_icon.png
     # image_dark: assets/splash/android12_splash_icon_dark.png
-

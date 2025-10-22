@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Boilerplate Anwendung"
+  },
+  "home": {
+    "title": "Startseite"
+  },
+  "common": {
+    "no_data": "Keine Daten gefunden",
+    "something_went_wrong": "Etwas ist schiefgelaufen",
+    "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten.",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "buttons": {
+    "save_local": "In lokalen Speicher speichern",
+    "read_local": "Aus lokalem Speicher lesen",
+    "save_secure": "In sicheren Speicher speichern",
+    "read_secure": "Aus sicherem Speicher lesen",
+    "show_bottom_sheet": "BottomSheet anzeigen",
+    "show_confirm_bottom_sheet": "Bestätigungs-BottomSheet anzeigen",
+    "go_main": "Zur Hauptseite",
+    "show_dialog": "Dialog anzeigen",
+    "show_snackbar": "Snackbar anzeigen",
+    "go_third": "Zur dritten Seite",
+    "unknown_page": "Unbekannte Seite",
+    "change_theme": "Thema wechseln"
+  },
+  "dialogs": {
+    "title": "Dialogtitel",
+    "message": "Dies ist mittlerer Text"
+  },
+  "bottomsheet": {
+    "reusable_title": "Wiederverwendbares BottomSheet",
+    "reusable_message": "Dieser Inhalt kann überall leicht verwendet werden."
+  },
+  "confirm": {
+    "title": "Aktion bestätigen",
+    "message": "Möchten Sie fortfahren?",
+    "result": "Ergebnis: @result"
+  },
+  "lang": {
+    "en": "Englisch",
+    "de": "Deutsch",
+    "tr": "Türkisch"
+  },
+  "hello": "Hallo Welt",
+  "hello_name": "Hallo @name"
+}

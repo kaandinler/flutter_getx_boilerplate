@@ -1,0 +1,4 @@
+// QA flavor settings
+APP_DISPLAY_NAME = GetX Boilerplate (QA)
+PRODUCT_BUNDLE_IDENTIFIER = com.qandq.getx_boilerplate.qa
+

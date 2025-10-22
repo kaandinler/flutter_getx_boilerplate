@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Boilerplate Application"
+  },
+  "home": {
+    "title": "Home"
+  },
+  "common": {
+    "no_data": "No data found",
+    "something_went_wrong": "Something went wrong",
+    "unexpected_error": "An unexpected error occurred.",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "buttons": {
+    "save_local": "Save Data to Local Storage",
+    "read_local": "Read Data from Local Storage",
+    "save_secure": "Save Data to Secure Storage",
+    "read_secure": "Read Data from Secure Storage",
+    "show_bottom_sheet": "Show BottomSheet",
+    "show_confirm_bottom_sheet": "Show Confirm BottomSheet",
+    "go_main": "Go to Main Page",
+    "show_dialog": "Show Dialog",
+    "show_snackbar": "Show SnackBar",
+    "go_third": "Go to Third View",
+    "unknown_page": "Unknown Page",
+    "change_theme": "Change Theme"
+  },
+  "dialogs": {
+    "title": "Dialog Title",
+    "message": "This is middle text"
+  },
+  "bottomsheet": {
+    "reusable_title": "Reusable BottomSheet",
+    "reusable_message": "This content can be used easily everywhere."
+  },
+  "confirm": {
+    "title": "Confirm Action",
+    "message": "Do you want to continue?",
+    "result": "Result: @result"
+  },
+  "lang": {
+    "en": "English",
+    "de": "Deutsch",
+    "tr": "Türkçe"
+  },
+  "hello": "Hello World",
+  "hello_name": "Hello @name"
+}

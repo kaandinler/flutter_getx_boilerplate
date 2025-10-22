@@ -15,11 +15,19 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## When you fetch the project, you should run the terminal code at root directory
+## Getting Started (local)
 
-flutter pub run build_runner watch --delete-conflicting-outputs
+1) Install dependencies
 
-flutter run --flavor dev -t lib/main_dev
+flutter pub get
+
+2) Run the app (Dev flavor)
+
+flutter run --flavor dev -t lib/main_dev.dart
+
+Optional (only if you add code‑generation packages like freezed/json_serializable):
+
+dart run build_runner watch --delete-conflicting-outputs
 
 ## Bundle scripts
 
@@ -32,6 +40,17 @@ flutter build ipa -t lib/main_prod.dart --flavor prod
 ## Update icon
 
 flutter pub run flutter_launcher_icons:main
+
+Flavor icons
+- Place flavor-specific icons:
+  - Dev: `assets/icons/app_icon_dev.png`
+  - QA: `assets/icons/app_icon_qa.png`
+  - Prod: `assets/icons/app_icon_prod.png`
+- Generate all: `flutter pub run flutter_launcher_icons`
+- Or per flavor:
+  - Dev: `flutter pub run flutter_launcher_icons:main -f pubspec.yaml --flavor dev`
+  - QA: `flutter pub run flutter_launcher_icons:main -f pubspec.yaml --flavor qa`
+  - Prod: `flutter pub run flutter_launcher_icons:main -f pubspec.yaml --flavor prod`
 
 ## Update splash
 
@@ -57,7 +76,7 @@ Google Play publish (CI)
   - `PLAY_SERVICE_ACCOUNT_JSON` JSON of Google Play service account (plaintext)
 - Yayın davranışı env ile:
   - `PUBLISH_TRACK` `internal|production` (default: `internal`)
-  - `ANDROID_ROLLOUT_FRACTION` (örn. `0.1` → %10, sadece production’da kullanılır)
+  - `ANDROID_ROLLOUT_FRACTION` (örn. `0.1` → %10, sadece production'da kullanılır)
 
 App Store/TestFlight publish (CI)
 - Secrets required:
@@ -112,6 +131,20 @@ Run commands
 - QA: `flutter run --flavor qa -t lib/main_qa.dart`
 - Prod: `flutter run --flavor prod -t lib/main_prod.dart`
 
+## Localization (i18n)
+
+- JSON-based translations are loaded from `assets/locales/`.
+- Supported locales: `en_US`, `tr_TR`, `de_DE` (fallback: `en_US`).
+- Files:
+  - `assets/locales/en-US.json`
+  - `assets/locales/tr-TR.json`
+  - `assets/locales/de-DE.json`
+- Add a new language:
+  1. Create `assets/locales/<lang-REGION>.json` (e.g., `de-DE.json`).
+  2. Add to `kSupportedLocales` and `kLocaleAssetMap` in `lib/app/core/localization/localization.dart`.
+  3. Run `flutter pub get` and rebuild.
+- Usage in code (GetX): `'hello'.tr` or `'hello_name'.trParams({'name': 'Kaan'})`
+
 ## Security
 
 - Do not store secrets in `.env` files; they are bundled with the app. Use them for non-sensitive config.
@@ -158,3 +191,17 @@ iOS
   - `beta_ipa` uploads an existing IPA from `build/ios/ipa`
   - `release` builds and uploads to App Store (not auto-submit)
 - Provide API key via env vars `APP_STORE_CONNECT_API_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_API_KEY`.
+
+## iOS Flavors (Schemes & Bundle IDs)
+
+- Info.plist uses `$(APP_DISPLAY_NAME)` for the display name.
+- Provided xcconfig files:
+  - `ios/Config/dev.xcconfig` → `APP_DISPLAY_NAME = GetX Boilerplate (Dev)`, `PRODUCT_BUNDLE_IDENTIFIER = com.qandq.getx_boilerplate.dev`
+  - `ios/Config/qa.xcconfig` → `APP_DISPLAY_NAME = GetX Boilerplate (QA)`, `PRODUCT_BUNDLE_IDENTIFIER = com.qandq.getx_boilerplate.qa`
+  - `ios/Config/prod.xcconfig` → `APP_DISPLAY_NAME = GetX Boilerplate`, `PRODUCT_BUNDLE_IDENTIFIER = com.qandq.getx_boilerplate`
+
+How to wire in Xcode
+- Duplicate Build Configurations to create: `Debug-dev`, `Release-dev`, `Debug-qa`, `Release-qa`, `Debug-prod`, `Release-prod`.
+- Set Base Configuration for each to corresponding xcconfig (e.g., `Debug-dev` → `ios/Config/dev.xcconfig`).
+- Duplicate Runner scheme into: `Runner-dev`, `Runner-qa`, `Runner-prod` and map build configs accordingly.
+- Ensure scheme names match Flutter flavors (`dev`, `qa`, `prod`) for iOS icons per flavor.

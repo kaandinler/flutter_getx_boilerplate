@@ -1,0 +1,51 @@
+{
+  "app": {
+    "title": "Boilerplate Uygulaması"
+  },
+  "home": {
+    "title": "Ana Sayfa"
+  },
+  "common": {
+    "no_data": "Kayıt bulunamadı",
+    "something_went_wrong": "Bir şeyler ters gitti",
+    "unexpected_error": "Beklenmeyen bir hata oluştu.",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "buttons": {
+    "save_local": "Yerel Depolamaya Kaydet",
+    "read_local": "Yerli Depolamadan Oku",
+    "save_secure": "Güvenli Depolamaya Kaydet",
+    "read_secure": "Güvenli Depolamadan Oku",
+    "show_bottom_sheet": "BottomSheet Göster",
+    "show_confirm_bottom_sheet": "Onay BottomSheet Göster",
+    "go_main": "Ana Sayfaya Git",
+    "show_dialog": "Diyalog Göster",
+    "show_snackbar": "Snackbar Göster",
+    "go_third": "Üçüncü Sayfaya Git",
+    "unknown_page": "Bilinmeyen Sayfa",
+    "change_theme": "Temayı Değiştir"
+  },
+  "dialogs": {
+    "title": "Diyalog Başlığı",
+    "message": "Bu orta metindir"
+  },
+  "bottomsheet": {
+    "reusable_title": "Yeniden Kullanılabilir BottomSheet",
+    "reusable_message": "Bu içerik her yerde kolayca kullanılabilir."
+  },
+  "confirm": {
+    "title": "İşlemi onayla",
+    "message": "Devam etmek istiyor musun?",
+    "result": "Sonuç: @result"
+  },
+  "lang": {
+    "en": "İngilizce",
+    "de": "Almanca",
+    "tr": "Türkçe"
+  },
+  "hello": "Merhaba Dünya",
+  "hello_name": "Merhaba @name"
+}
